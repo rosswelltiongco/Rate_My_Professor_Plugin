@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+
+    "name": "Dummy plugin",
+    "description": "This extension changes the's in a webpage to all caps",
+    "version": "1.0",
+
+    "browser_action": {
+        "default_popup": "code.html",
+        "default_title": "Sample"
+    },
+
+    // "content_scripts": [
+    //     {
+    //         "matches": [
+    //             "*://cmsweb.cms.csulb.edu/*"
+    //         ],
+    //         "js": [
+    //             "content.js"
+    //         ],
+    //         "run_at": "document_end"
+    //     }
+    // ],
+
+    "permissions": [
+        "activeTab"
+    ]
+
+    
+}

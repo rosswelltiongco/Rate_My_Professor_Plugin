@@ -1,0 +1,42 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+  <head>
+    <title>Getting Started Extension's Popup</title>
+    <style type="text/css">
+      body {
+        margin: 10px;
+        white-space: nowrap;
+      }
+
+      h1 {
+        font-size: 15px;
+      }
+
+      #container {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <h1>Find & Replace</h1>
+    <form>
+        Dummy variable: <input type="text" id="find"><br>
+        Replace: <input type="text" id="replace">
+        
+        <button type="submit">Update</button>
+        
+    </form>
+    
+
+    <script src="content.js" defer></script>
+  </body>
+</html>
