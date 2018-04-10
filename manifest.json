@@ -10,17 +10,16 @@
         "default_title": "Sample"
     },
 
-    // "content_scripts": [
-    //     {
-    //         "matches": [
-    //             "*://cmsweb.cms.csulb.edu/*"
-    //         ],
-    //         "js": [
-    //             "content.js"
-    //         ],
-    //         "run_at": "document_end"
-    //     }
-    // ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://cmsweb.cms.csulb.edu/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
 
     "permissions": [
         "activeTab"

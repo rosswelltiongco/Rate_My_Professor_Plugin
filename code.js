@@ -1,11 +1,13 @@
 
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     var i = 0;
-    var id = "MTG_INSTR$"+i;
+    var id = "MTG_INSTR$" + i;
     var prof = document.getElementById(id);
     var ids = JSON.parse(message);
 
-    while(prof!=null){
+    var buttonId = "button_";
+
+    while (prof != null) {
 
         i++;
 
@@ -16,9 +18,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         let profLink = "http://ratemyprofessors.com/ShowRatings.jsp?tid=" + ids[profName] + "&amp;showMyProfs=true";
 
 
-        prof.innerHTML = "<a class=\"PSLONGEDITBOX\" id=\"MTG_INSTR$0\" href= "+profLink+" rel=\"noopener noreferrer\" target=\"_blank\">"+profName+"</a>";
+        prof.innerHTML = prof.innerHTML + "<br><button type='button' id=\"" + buttonId + i + "\" onclick=\" window.open('" + profLink + "','_blank')\" >RMP</button><br>";
 
-        id = "MTG_INSTR$"+i;
+        id = "MTG_INSTR$" + i;
         prof = document.getElementById(id);
     }
 });
