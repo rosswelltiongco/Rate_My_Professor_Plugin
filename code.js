@@ -18,8 +18,8 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         let profLink = "http://ratemyprofessors.com/ShowRatings.jsp?tid=" + ids[profName] + "&amp;showMyProfs=true";
 
 
-        prof.innerHTML = prof.innerHTML + "<br><button type='button' id=\"" + buttonId + i + "\" onclick=\" window.open('" + profLink + "','_blank')\" >RMP</button><br>";
-
+        prof.innerHTML = prof.innerHTML + "<br><button type='button' title=\"I am a tooltip!\"  id=\"" + buttonId + i + "\" onclick=\" window.open('" + profLink + "','_blank')\" >RMP</button><br>";
+		//Fixme: look into 
         id = "MTG_INSTR$" + i;
         prof = document.getElementById(id);
     }
