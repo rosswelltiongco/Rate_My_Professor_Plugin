@@ -1,18 +1,24 @@
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    
+    var names = [];
 
     if(message.function == "createLinks"){
         ids = JSON.parse(message.information);
         createLinks(ids);
         return;
     }
+    else if(message.function == "scrapeHTML"){
+        console.log(scrapeRMP());
+    }
     
-    var names = [];
+    
     var unique = [];
 
     //Here is how you access the temporary memory to get the latest array of professor links
     chrome.storage.sync.get('professors', function(result){
         names = result.professors;
+        //You actually need to put the rest of the code in here because this code is asynchronous
     });
 
 
@@ -29,11 +35,16 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 });
 
 function createLinks(ids){
+    console.log(ids);
     var i = 0;
     var id = "MTG_INSTR$" + i;
     var prof = document.getElementById(id);
     const buttonId = "button_";
     var names = [];
+
+    if(prof.innerHTML.length > 30){
+        return;
+    }
 
     while (prof != null) {
 
@@ -57,6 +68,11 @@ function createLinks(ids){
     chrome.storage.sync.set({'professors': names}, function(){
         console.log("set professors");
     });
-    
-}
 
+}
+ function scrapeRMP(){
+    let grades = document.getElementsByClassName("grade");
+    let scrapedInfo = "Overall Quality: " + grades[0].innerHTML + "\n" + "Would Take Again: " + grades[1].innerHTML.replace(/\s/g,'') + "\n" + "Difficulty: " + grades[2].innerHTML.replace(/\s/g,'');
+    
+    return scrapedInfo;
+ }
