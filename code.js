@@ -31,6 +31,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         redirectWindow.location;
         console.log(unique[i]);
     }
+
     
 });
 
@@ -76,3 +77,26 @@ function createLinks(ids){
     
     return scrapedInfo;
  }
+function openTabs(){
+
+    var names = [];
+
+    var unique = [];
+    //Here is how you access the temporary memory to get the latest array of professor links
+    chrome.storage.sync.get('professors', function(result){
+        names = result.professors;
+    });
+    
+    
+    unique = names.filter(function(elem, index, self) { // removes duplicates from names array
+        return index === self.indexOf(elem);
+    })
+
+    for(var i=0; i<unique.length;i++){ // for each index in unique array, open a tab. (opens an error tab for proessors not in RMP ids.txt files) 
+        var redirectWindow = window.open(unique[i], '_blank');
+        redirectWindow.location;
+        console.log(unique[i]);
+    }
+}
+
+
