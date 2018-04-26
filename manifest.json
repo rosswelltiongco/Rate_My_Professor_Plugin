@@ -1,13 +1,13 @@
 {
     "manifest_version": 2,
 
-    "name": "Dummy plugin",
-    "description": "This extension changes the's in a webpage to all caps",
+    "name": "CSULB Rate My Professor",
+    "description": "Updates MyCSULB schedule with Rate My Professor scores",
     "version": "1.0",
 
     "browser_action": {
         "default_popup": "code.html",
-        "default_title": "Sample"
+        "default_title": "CSULB RMP"
     },
 
     "content_scripts": [
@@ -24,7 +24,12 @@
     "permissions": [
         "activeTab",
         "storage"
-    ]
+    ],
+	
+	"icons":{ 	"16" : "icon.png",
+			    "48" : "icon.png",
+			   "128" : "icon.png"
+	}
 
     
 }
