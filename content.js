@@ -1,15 +1,16 @@
 const form = document.querySelector('form');
 form.addEventListener('submit', updateText);
+
 let button = document.getElementById("tabButton");
 
 if(button != null){
-    button.addEventListener("click", scrapeRMP);
+    button.addEventListener("click", openTabs);
 }
 
 
 function updateText(e) {
     e.preventDefault();
-
+    
     var information = "";    
 
     chrome.runtime.getPackageDirectoryEntry(function (root) {
@@ -36,13 +37,14 @@ function updateText(e) {
     });
 }
 
-function scrapeRMP(e){
+function openTabs(e){
+    
     e.preventDefault();
 
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabArr) {
         let id = tabArr[0].id;
         chrome.tabs.executeScript(id, { file: 'code.js' }, function () {
-            chrome.tabs.sendMessage(id, {function: "scrapeHTML"});
+            chrome.tabs.sendMessage(id, {function: "openTabs"});
         });
     });
 }

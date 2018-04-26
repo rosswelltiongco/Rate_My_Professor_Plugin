@@ -1,38 +1,16 @@
-
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    
-    var names = [];
 
     if(message.function == "createLinks"){
+        console.log("hi");
         ids = JSON.parse(message.information);
         createLinks(ids);
         return;
     }
-    else if(message.function == "scrapeHTML"){
-        console.log(scrapeRMP());
-    }
-    
-    
-    var unique = [];
-
-    //Here is how you access the temporary memory to get the latest array of professor links
-    chrome.storage.sync.get('professors', function(result){
-        names = result.professors;
-        //You actually need to put the rest of the code in here because this code is asynchronous
-    });
-
-
-    unique = names.filter(function(elem, index, self) { // removes duplicates from names array
-        return index === self.indexOf(elem);
-    })
-
-    for(var i=0; i<unique.length;i++){ // for each index in unique array, open a tab. (opens an error tab for proessors not in RMP ids.txt files) 
-        var redirectWindow = window.open(unique[i], '_blank');
-        redirectWindow.location;
-        console.log(unique[i]);
+    else if(message.function == "openTabs"){
+        openTabs();
     }
 
-    
+       
 });
 
 function createLinks(ids){
@@ -59,7 +37,7 @@ function createLinks(ids){
             names.push(profLink);
         }
 
-         prof.innerHTML = prof.innerHTML + "<br><button type='button' title=\"I am a tooltip!\"  id=\"" + buttonId + i + "\" onclick=\" window.open('" + profLink + "','_blank')\" >RMP</button><br>";
+        prof.innerHTML = prof.innerHTML + "<br><button type='button' title=\"I am a tooltip!\"  id=\"" + buttonId + i + "\" onclick=\" window.open('" + profLink + "','_blank')\" >RMP</button><br>";
 		//Fixme: look into 
         id = "MTG_INSTR$" + i;
         prof = document.getElementById(id);
@@ -82,21 +60,21 @@ function openTabs(){
     var names = [];
 
     var unique = [];
+
     //Here is how you access the temporary memory to get the latest array of professor links
     chrome.storage.sync.get('professors', function(result){
+        
         names = result.professors;
+
+        unique = names.filter(function(elem, index, self) { // removes duplicates from names array
+            return index === self.indexOf(elem);
+        })
+
+        for(var i=0; i<unique.length;i++){ // for each index in unique array, open a tab. (opens an error tab for proessors not in RMP ids.txt files) 
+            var redirectWindow = window.open(unique[i], '_blank');
+            redirectWindow.location;
+        }
+
     });
-    
-    
-    unique = names.filter(function(elem, index, self) { // removes duplicates from names array
-        return index === self.indexOf(elem);
-    })
 
-    for(var i=0; i<unique.length;i++){ // for each index in unique array, open a tab. (opens an error tab for proessors not in RMP ids.txt files) 
-        var redirectWindow = window.open(unique[i], '_blank');
-        redirectWindow.location;
-        console.log(unique[i]);
-    }
 }
-
-
