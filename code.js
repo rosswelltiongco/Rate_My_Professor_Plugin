@@ -1,7 +1,6 @@
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
     if(message.function == "createLinks"){
-        console.log("hi");
         ids = JSON.parse(message.information);
         createLinks(ids);
         return;
@@ -63,7 +62,7 @@ function openTabs(){
 
     //Here is how you access the temporary memory to get the latest array of professor links
     chrome.storage.sync.get('professors', function(result){
-        
+
         names = result.professors;
 
         unique = names.filter(function(elem, index, self) { // removes duplicates from names array
