@@ -17,7 +17,7 @@ function createLinks(ids){
     var i = 0;
     var id = "MTG_INSTR$" + i;
     var prof = document.getElementById(id);
-    const buttonId = "button_";
+    const linkId = "link_";
     var names = [];
 
     if(prof.innerHTML.length > 30){
@@ -36,7 +36,7 @@ function createLinks(ids){
             names.push(profLink);
         }
 
-        prof.innerHTML = prof.innerHTML + "<br><button type='button' title=\"I am a tooltip!\"  id=\"" + buttonId + i + "\" onclick=\" window.open('" + profLink + "','_blank')\" >RMP</button><br>";
+        prof.innerHTML = "<a title=\"I am a tooltip!\"  id=\"" + linkId + i + "class=\"PSLONGEDITBOX\" id=\"MTG_INSTR$0\" href= "+profLink+" rel=\"noopener noreferrer\" target=\"_blank\">"+profName+"</a>";
 		//Fixme: look into 
         id = "MTG_INSTR$" + i;
         prof = document.getElementById(id);
