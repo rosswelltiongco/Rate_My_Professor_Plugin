@@ -68,7 +68,8 @@ function openTabs(){
         unique = names.filter(function(elem, index, self) { // removes duplicates from names array
             return index === self.indexOf(elem);
         })
-
+        console.log(unique);
+        
         for(var i=0; i<unique.length;i++){ // for each index in unique array, open a tab. (opens an error tab for proessors not in RMP ids.txt files) 
             var redirectWindow = window.open(unique[i], '_blank');
             redirectWindow.location;
