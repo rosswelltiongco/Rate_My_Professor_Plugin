@@ -36,7 +36,7 @@ function createLinks(ids){
             names.push(profLink);
         }
 
-        prof.innerHTML = "<a title=\"I am a tooltip!\"  id=\"" + linkId + i + "class=\"PSLONGEDITBOX\" id=\"MTG_INSTR$0\" href= "+profLink+" rel=\"noopener noreferrer\" target=\"_blank\">"+profName+"</a>";
+        prof.innerHTML = "<a title=\"I am a tooltip!\" class=\"PSLONGEDITBOX\" id=\"MTG_INSTR$0\" href= "+profLink+" rel=\"noopener noreferrer\" target=\"_blank\">"+profName+"</a>";
 		//Fixme: look into 
         id = "MTG_INSTR$" + i;
         prof = document.getElementById(id);
