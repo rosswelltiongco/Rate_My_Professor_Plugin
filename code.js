@@ -8,8 +8,17 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         createLinks(ids);
         return;
     }
-    else if(message.function == "scrapeHTML"){
-        console.log(scrapeRMP());
+    else if(message.function == "scrapeRMP"){
+        let newTitle = scrapeRMP();
+        let response = {info: newTitle}
+        console.log(response);
+        sendResponse(response);
+    }
+    else if(message.function == "updateTitle"){
+        let professor_id = message.professorID;
+        let professor_info = message.info;
+
+        updateButtonTitle(professor_id, professor_info);
     }
     
     
@@ -53,14 +62,23 @@ function createLinks(ids){
 
         let profName = prof.innerHTML;
 
-        let profLink = "http://ratemyprofessors.com/ShowRatings.jsp?tid=" + ids[profName] + "&amp;showMyProfs=true";
+        let current_id = ids[profName]
+
+        let profLink = "http://ratemyprofessors.com/ShowRatings.jsp?tid=" + current_id + "&amp;showMyProfs=true";
 
         if(profName != 'Staff'){ // only adds non Staff names links to the names array which contains duplicates
             names.push(profLink);
         }
 
-         prof.innerHTML = prof.innerHTML + "<br><button type='button' title=\"I am a tooltip!\"  id=\"" + buttonId + i + "\" onclick=\" window.open('" + profLink + "','_blank')\" >RMP</button><br>";
-		//Fixme: look into 
+        let current_button = buttonId + i
+
+        prof.innerHTML = prof.innerHTML + "<br><button type='button' title=\"I am a tooltip!\"  id=\"" + current_button + "\" name=\""+profLink+"\">RMP</button><br>";
+        
+        //Add event listener to button
+        let button = document.getElementById(current_button);
+        button.addEventListener('click', openNewTab);
+
+        //Fixme: look into 
         id = "MTG_INSTR$" + i;
         prof = document.getElementById(id);
     }
@@ -71,12 +89,14 @@ function createLinks(ids){
     });
 
 }
+
  function scrapeRMP(){
     let grades = document.getElementsByClassName("grade");
     let scrapedInfo = "Overall Quality: " + grades[0].innerHTML + "\n" + "Would Take Again: " + grades[1].innerHTML.replace(/\s/g,'') + "\n" + "Difficulty: " + grades[2].innerHTML.replace(/\s/g,'');
     
     return scrapedInfo;
  }
+
 function openTabs(){
 
     var names = [];
@@ -99,4 +119,23 @@ function openTabs(){
     }
 }
 
+function openNewTab(e){
 
+    window.open(e.target.name);
+    let id = e.target.id
+    let object = {'last': id};
+    localStorage.setItem('last', id);
+}
+
+function updateButtonTitle(id, new_title){
+    
+    console.log("Prof id to be searched: " + id);
+    console.log(new_title);
+
+    let button_id = localStorage.getItem("last");
+
+    console.log(new_title.substring(17,20));
+
+    let button = document.getElementById(button_id);
+    button.title = new_title;
+}

@@ -13,7 +13,8 @@
     "content_scripts": [
         {
             "matches": [
-                "*://cmsweb.cms.csulb.edu/*"
+                "*://cmsweb.cms.csulb.edu/*",
+                "http://www.ratemyprofessors.com/ShowRatings.jsp?showMyProfs=true&tid=*"
             ],
             "js": [
                 "content.js"
@@ -21,9 +22,16 @@
         }
     ],
 
+    "background": {
+        "scripts": ["background.js"]
+    },
+
+
     "permissions": [
         "activeTab",
-        "storage"
+        "storage",
+        "*://cmsweb.cms.csulb.edu/*",
+        "http://www.ratemyprofessors.com/ShowRatings.jsp?showMyProfs=true&tid=*"
     ]
 
     

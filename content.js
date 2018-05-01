@@ -1,11 +1,9 @@
 const form = document.querySelector('form');
 form.addEventListener('submit', updateText);
-let button = document.getElementById("tabButton");
-
-if(button != null){
-    button.addEventListener("click", scrapeRMP);
-}
-
+// let button = document.getElementById("tabButton");
+// if(button != null){
+//     button.addEventListener("click", scrapeRMP);
+// }
 
 function updateText(e) {
     e.preventDefault();
@@ -32,17 +30,6 @@ function updateText(e) {
             chrome.tabs.sendMessage(id, {function: "createLinks", information: information}, function(){
                 chrome.runtime.reload();
             });
-        });
-    });
-}
-
-function scrapeRMP(e){
-    e.preventDefault();
-
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabArr) {
-        let id = tabArr[0].id;
-        chrome.tabs.executeScript(id, { file: 'code.js' }, function () {
-            chrome.tabs.sendMessage(id, {function: "scrapeHTML"});
         });
     });
 }
