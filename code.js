@@ -1,7 +1,4 @@
-
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    
-    var names = [];
 
     if(message.function == "createLinks"){
         ids = JSON.parse(message.information);
@@ -20,28 +17,11 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
         updateButtonTitle(professor_id, professor_info);
     }
-    
-    
-    var unique = [];
-
-    //Here is how you access the temporary memory to get the latest array of professor links
-    chrome.storage.sync.get('professors', function(result){
-        names = result.professors;
-        //You actually need to put the rest of the code in here because this code is asynchronous
-    });
-
-
-    unique = names.filter(function(elem, index, self) { // removes duplicates from names array
-        return index === self.indexOf(elem);
-    })
-
-    for(var i=0; i<unique.length;i++){ // for each index in unique array, open a tab. (opens an error tab for proessors not in RMP ids.txt files) 
-        var redirectWindow = window.open(unique[i], '_blank');
-        redirectWindow.location;
-        console.log(unique[i]);
+    else if(message.function == "openTabs"){
+        openTabs();
     }
 
-    
+       
 });
 
 function createLinks(ids){
@@ -49,8 +29,9 @@ function createLinks(ids){
     var i = 0;
     var id = "MTG_INSTR$" + i;
     var prof = document.getElementById(id);
-    const buttonId = "button_";
+    const linkId = "link_";
     var names = [];
+    var buttonId = "button_"
 
     if(prof.innerHTML.length > 30){
         return;
@@ -70,14 +51,14 @@ function createLinks(ids){
             names.push(profLink);
         }
 
-        let current_button = buttonId + i
+        let current_button = buttonId + i       
 
-        prof.innerHTML = prof.innerHTML + "<br><button type='button' title=\"I am a tooltip!\"  id=\"" + current_button + "\" name=\""+profLink+"\">RMP</button><br>";
+        prof.innerHTML = "<a title=\"I am a tooltip!\" id="+current_button+" href= "+profLink+" rel=\"noopener noreferrer\" target=\"_blank\">"+profName+"</a>";
         
         //Add event listener to button
         let button = document.getElementById(current_button);
         button.addEventListener('click', openNewTab);
-
+        
         //Fixme: look into 
         id = "MTG_INSTR$" + i;
         prof = document.getElementById(id);
@@ -102,33 +83,36 @@ function openTabs(){
     var names = [];
 
     var unique = [];
+
     //Here is how you access the temporary memory to get the latest array of professor links
     chrome.storage.sync.get('professors', function(result){
-        names = result.professors;
-    });
-    
-    
-    unique = names.filter(function(elem, index, self) { // removes duplicates from names array
-        return index === self.indexOf(elem);
-    })
 
-    for(var i=0; i<unique.length;i++){ // for each index in unique array, open a tab. (opens an error tab for proessors not in RMP ids.txt files) 
-        var redirectWindow = window.open(unique[i], '_blank');
-        redirectWindow.location;
-        console.log(unique[i]);
-    }
+        names = result.professors;
+
+        unique = names.filter(function(elem, index, self) { // removes duplicates from names array
+            return index === self.indexOf(elem);
+        })
+
+        for(var i=0; i<unique.length;i++){ // for each index in unique array, open a tab. (opens an error tab for proessors not in RMP ids.txt files) 
+            var redirectWindow = window.open(unique[i], '_blank');
+            redirectWindow.location;
+        }
+
+    });
+
+    
+
 }
 
 function openNewTab(e){
 
-    window.open(e.target.name);
     let id = e.target.id
     let object = {'last': id};
     localStorage.setItem('last', id);
 }
 
 function updateButtonTitle(id, new_title){
-    
+
     console.log("Prof id to be searched: " + id);
     console.log(new_title);
 
@@ -137,5 +121,9 @@ function updateButtonTitle(id, new_title){
     console.log(new_title.substring(17,20));
 
     let button = document.getElementById(button_id);
-    button.title = new_title;
+    if(button.title == "I am a tooltip!"){
+        button.title = new_title;
+        button.innerHTML = button.innerHTML + " " + new_title.substring(17,20);
+    }
+    
 }

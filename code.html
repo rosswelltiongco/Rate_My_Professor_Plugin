@@ -15,25 +15,38 @@
 
       h1 {
         font-size: 15px;
+		    color: coral;
       }
-
+	  
       #container {
         align-items: center;
         display: flex;
         justify-content: space-between;
       }
+	  
+	  .formButton {
+		color: #0099CC; 
+		background: transparent; 
+		border: 2px solid #0099CC;
+		border-radius: 6px;
+	  }
+	  .formButton:hover {
+		background-color: #008CBA;
+		color: white;
+	  }
     </style>
 
   </head>
 
   <body>
     <h1>CSULB RMP</h1>
+
     <form>
     <!--Dummy variable: <input type="text" id="find"><br>
         Replace: <input type="text" id="replace">-->
-        <button type="submit">Update</button>
+        <button class = "formButton" type="submit">Update</button>
 
-        <input type="button" id="tabButton" value="Open all Professors"/>
+        <input type="button" class = "formButton" id="tabButton" value="Open all Professors"/>
     
     </form>
     
