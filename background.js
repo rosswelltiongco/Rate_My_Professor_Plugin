@@ -19,7 +19,9 @@ chrome.tabs.onUpdated.addListener(function(){
 
             if(url.substring(0,28) == "https://cmsweb.cms.csulb.edu"){
                 localStorage.setItem("myCSULB_tabID", id);
+                console.log("CSULB tab set to: " + id);
             }
+
             else if(url.substring(0,69) == "http://www.ratemyprofessors.com/ShowRatings.jsp?showMyProfs=true&tid="){
                 prof_id = url.substring(69);
                 console.log(prof_id);
@@ -33,7 +35,7 @@ chrome.tabs.onUpdated.addListener(function(){
                         if(prof_info == "N/A"){
 
                         }
-                        else if(prof_id == undefined){
+                        else if(prof_info == undefined){
 
                         }
                         else{

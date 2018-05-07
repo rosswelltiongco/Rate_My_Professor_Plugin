@@ -1,5 +1,7 @@
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    
     if(message.function == "createLinks"){
         ids = JSON.parse(message.information);
         createLinks(ids);
@@ -25,7 +27,6 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 });
 
 function createLinks(ids){
-    console.log(ids);
     var i = 0;
     var id = "MTG_INSTR$" + i;
     var prof = document.getElementById(id);
@@ -53,7 +54,7 @@ function createLinks(ids){
 
         let current_button = buttonId + i       
 
-        prof.innerHTML = "<a title=\"I am a tooltip!\" id="+current_button+" href= "+profLink+" rel=\"noopener noreferrer\" target=\"_blank\">"+profName+"</a>";
+        prof.innerHTML = "<a title=\"I am a tooltip!\" id="+current_button+" href= "+profLink+" rel=\"noopener noreferrer\" target=\"_blank\" prof="+ids[profName]+">"+profName+"</a>";
         
         //Add event listener to button
         let button = document.getElementById(current_button);
@@ -87,6 +88,8 @@ function openTabs(){
     //Here is how you access the temporary memory to get the latest array of professor links
     chrome.storage.sync.get('professors', function(result){
 
+        
+
         names = result.professors;
 
         unique = names.filter(function(elem, index, self) { // removes duplicates from names array
@@ -95,8 +98,10 @@ function openTabs(){
 
         for(var i=0; i<unique.length;i++){ // for each index in unique array, open a tab. (opens an error tab for proessors not in RMP ids.txt files) 
             var redirectWindow = window.open(unique[i], '_blank');
-            redirectWindow.location;
+            console.log(redirectWindow);
         }
+
+        
 
     });
 
@@ -106,24 +111,48 @@ function openTabs(){
 
 function openNewTab(e){
 
-    let id = e.target.id
-    let object = {'last': id};
-    localStorage.setItem('last', id);
+    let id = e.target.id;
+    let name = e.target.innerHTML;
+    let title = e.target.title;
+
+    if(title == "I am a tooltip!"){
+        let object = {'last': name};
+        localStorage.setItem('last', name);
+    }
+    else{
+        localStorage.setItem('last', 'N/A');
+    }
+
+    
 }
 
-function updateButtonTitle(id, new_title){
+function updateButtonTitle(prof_id, new_title){
+    var name = localStorage.getItem("last");
+    var i = 1;    
+    var buttonId = "button_"
 
-    console.log("Prof id to be searched: " + id);
-    console.log(new_title);
-
-    let button_id = localStorage.getItem("last");
-
-    console.log(new_title.substring(17,20));
-
-    let button = document.getElementById(button_id);
-    if(button.title == "I am a tooltip!"){
-        button.title = new_title;
-        button.innerHTML = button.innerHTML + " " + new_title.substring(17,20);
+    if(name == "N/A"){
+        return;
     }
+
+    else{
+        console.log("Prof name to be searched: " + name);
+        console.log(new_title);
+
+        
+        var currentButton = document.getElementById(buttonId+i++);
+
+        while(currentButton != null){
+            if(currentButton.innerHTML == name){
+                currentButton.title = new_title;
+                currentButton.innerHTML = currentButton.innerHTML + " " + new_title.substring(17,20);
+            }
+
+            currentButton = document.getElementById(buttonId+i++);
+        }
+
+        localStorage.setItem('last', 'N/A');
+    }
+    
     
 }
