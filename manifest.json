@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "CSULB RateMyProfessor",
-    "description": "This extension directs users to a specific professors' RateMyProfessor page from the CSULB class search page",
+    "description": "This extension directs users to a specific professors' RateMyProfessor page from the CSULB class search page. **HOW TO USE** Download the files and unload them into your chrome extensions in developer mode. Log into myCSULB and search for classes, and then open the chrome extension form and click Update. The professors' names should now be clickable.",
     "version": "1.0",
 
     "browser_action": {
