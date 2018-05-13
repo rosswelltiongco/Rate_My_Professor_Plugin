@@ -197,18 +197,21 @@ function updateButtonTitle(prof_id, new_title){
                 currentButton.title = new_title;
                 let grade = new_title.substring(17,20);
                 floatGrade = parseFloat(grade);
+                var gradeColor = '';
                 if(floatGrade >= 3.5){
-                    currentButton.innerHTML = currentButton.innerHTML + " " + "<span style = 'color: #0BB112;'><b>" +grade+ "</b></span>";
+                    gradeColor = '#0BB112';
                     
                 }
                 if(floatGrade >= 2.5 && grade < 3.5){
-                    currentButton.innerHTML = currentButton.innerHTML + " " + "<span style = 'color: #ECE505;'><b>" +grade+ "</b></span>";
+                    gradeColor = '#ECE505';
                     
                 }
                 if(floatGrade < 2.5){
-                    currentButton.innerHTML = currentButton.innerHTML + " " + "<span style = 'color: #CF3602;'><b>" +grade+ "</b></span>";
+                    gradeColor = '#CF3602';
                     
                 }
+
+                currentButton.innerHTML = currentButton.innerHTML + " " + "<span style = 'color:"+gradeColor+";'><b>" +grade+ "</b></span>";
                
             }
 
