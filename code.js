@@ -22,10 +22,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         openTabs();
     }
 
-       
 });
 
-function createLinks(ids){
+function createLinks(ids){ 
     var i = 0;
     var id = "MTG_INSTR$" + i;
     var prof = document.getElementById(id);
@@ -62,7 +61,7 @@ function createLinks(ids){
 
         let current_button = buttonId + i       
 
-        prof.innerHTML = "<a title=\"I am a tooltip!\" id="+current_button+" href= "+profLink+" rel=\"noopener noreferrer\" target=\"_blank\" prof="+ids[profName]+">"+profName+"</a>";
+        prof.innerHTML = "<a title=\"Click me to update hover text!\" id="+current_button+" href= "+profLink+" rel=\"noopener noreferrer\" target=\"_blank\" prof="+ids[profName]+">"+profName+"</a>";
         
         //Add event listener to button
         let button = document.getElementById(current_button);
@@ -165,7 +164,7 @@ function openNewTab(e){
     let name = e.target.innerHTML;
     let title = e.target.title;
 
-    if(title == "I am a tooltip!"){
+    if(title == "Click me to update hover text!"){
         let object = {'last': name};
         localStorage.setItem('last', name);
     }
@@ -188,7 +187,6 @@ function updateButtonTitle(prof_id, new_title){
     else{
         console.log("Prof name to be searched: " + name);
         console.log(new_title);
-
         
         var currentButton = document.getElementById(buttonId+i++);
 

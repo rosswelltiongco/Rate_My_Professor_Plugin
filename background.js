@@ -10,8 +10,10 @@ chrome.tabs.onUpdated.addListener(function(){
             return;
         }
         else{
+
             console.log("different");
             last_tabID = id;
+
         }
         let url = tabArr[0].url
        
@@ -26,7 +28,7 @@ chrome.tabs.onUpdated.addListener(function(){
                 prof_id = url.substring(69);
                 console.log(prof_id);
                 console.log(localStorage.getItem("myCSULB_tabID"));
-
+                
                 chrome.tabs.executeScript(id, { file: 'code.js' }, function () {
                     chrome.tabs.sendMessage(id, {function: "scrapeRMP"}, function(rsp){
                         
